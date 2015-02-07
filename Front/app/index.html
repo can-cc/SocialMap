@@ -1,0 +1,125 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>SocialMap2</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?type=quick&v=2.0&ak=xUjWwsO8Lo5xGxkHlH82BNZZ"></script>
+        <!-- endbuild -->
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+
+        <div class="container">
+            <div id="navigation">
+
+            </div>
+            <br>
+            <br>
+            <br>
+
+            <div id="main">
+                <div id="Map" >
+
+                </div>
+                <div id="Panel">
+                    this is panel!
+                </div>
+            </div>
+
+
+            <div class="footer">
+                <p>♥ Tyan Graduation Project</p>
+            </div>
+            <button type="button" class="btn btn-default" id="testb">Test</button>
+            <!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+                <!--Launch demo modal-->
+            <!--</button>-->
+
+            <!-- Modal -->
+
+            <div class="modal fade" id="ModalPanel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" id="ModalPanelBody">
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="SMModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="SMMLabel">Made something of it!</h4>
+                        </div>
+                        <div class="modal-body" id="SMMBody">
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- build:js scripts/vendor.js -->
+        <script src="bower_components/underscore/underscore-min.js"></script>
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/jquery-cookie/jquery.cookie.js"></script>
+        <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+        <script src="bower_components/backbone/backbone.js"></script>
+        <script src="bower_components/backbone.collectionview/backbone.collectionview.min.js"></script>
+
+        <!-- endbuild -->
+
+        <!-- build:js scripts/plugins.js -->
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/main.js -->
+        <script src="scripts/util/wgs2mars.min.js"></script>
+        <script src="scripts/util/bd09.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/templates.js"></script>
+        <script src="scripts/routes/MainRouter.js"></script>
+        <script src="scripts/views/MainView.js"></script>
+        <script src="scripts/views/MapView.js"></script>
+        <script src="scripts/views/Navigation.js"></script>
+        <script src="scripts/views/Profile.js"></script>
+        <script src="scripts/views/MPShow.js"></script>
+        <script src="scripts/views/PostForm.js"></script>
+        <script src="scripts/views/UserMP.js"></script>
+        <script src="scripts/views/UserShow.js"></script>
+        <script src="scripts/models/PositionModel.js"></script>
+        <script src="scripts/models/UserInformation.js"></script>
+        <script src="scripts/models/MarkPost.js"></script>
+        <script src="scripts/models/MPBubble.js"></script>
+        <script src="scripts/models/User.js"></script>
+        <script src="scripts/collections/MarkPostBubbles.js"></script>
+        <script src="scripts/collections/UserMarkPosts.js"></script>
+
+
+        <!-- endbuild -->
+</body>
+</html>

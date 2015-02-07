@@ -1,0 +1,25 @@
+<% for(var i=0; i<markPosts.length; i++) {%>
+    <% var markPost = markPosts[i] %>
+    <div class="row">
+        <div class="col-sm-9">
+            markPost.title
+            <li role="presentation" class="dropdown text-right" id="UMPOperate">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    Sign <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#signin">Delete</a></li>
+                </ul>
+            </li>
+            <div class="row">
+                <div class="col-xs-8 col-sm-6">
+                    markPost.postTime
+                </div>
+                <div class="col-xs-4 col-sm-6">
+                    count
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %>
+

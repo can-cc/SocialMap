@@ -1,0 +1,21 @@
+<div class="container-fluid">
+<%for(var i=0; i<data.length; i++){ %>
+<% var markPost = data[i]; %>
+    <div class="row">
+        <div class="col-md-6"><a class="userMP" id="<%= markPost.id %>"><%= markPost.title %></a></div>
+        <div class="col-md-3">
+            delete
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <%= markPost.text %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <%= markPost.postTime %>
+        </div>
+    </div>
+<%}%>
+</div>

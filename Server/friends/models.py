@@ -24,7 +24,7 @@ class FriendsInUserCategories(models.Model):
 
 class UserFollows(models.Model):
     user = models.ForeignKey(User, related_name="userFollows")
-    follow = models.ForeignKey(User, )
+    follow = models.ForeignKey(User)
     class Meta:
         unique_together = ('user', 'follow',)
 

@@ -80,9 +80,11 @@ class UserInformationDatail(APIView):
             self.put(self, request, format=None)
         else:
             import copy
-            data = copy.deepcopy(request.data)
-            data = eval(str(data))
-            data['user'] = request.user.pk#UserSerializer(request.user).data
+            data = {}
+            for i in request.data.keys():
+                if request.data[i] != '':
+                    data[i] = request.data[i]
+            data['user'] = request.user.pk
             serializer = UserInformationSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -101,9 +103,20 @@ class SimpleUserInfoDetail(generics.RetrieveUpdateDestroyAPIView):
 #warining !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #todo:notice: return pic path is 127.0.0.1!
 class UserPortraitDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly, )
     queryset = UserInformation.objects.all()
     serializer_class = PortraitSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class UserPortraitList(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    queryset = UserInformation.objects.all()
+    serializer_class = PortraitSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 #warining !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #todo:notice: return pic path is 127.0.0.1!

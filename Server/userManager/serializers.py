@@ -66,14 +66,17 @@ class UserSimpleShowSerializer(serializers.ModelSerializer):
         fields = ('user', 'nickName', 'portrait', 'personalDescription',)
 
 class PortraitSerializer(serializers.ModelSerializer):
+    #user = serializers.PrimaryKeyRelatedField(queryset=UserInformation.objects.all())
     portrait = serializers.ImageField(required=False)
+    def create(self, validated_data):
+        return UserInformation.objects.create(**validated_data)
     def update(self, instance, validated_data):
         instance.portrait = validated_data.get('portrait', instance.portrait)
         instance.save()
         return instance
     class Meta:
         model = UserInformation
-        fields = ('portrait', )
+        fields = ('id', 'user', 'portrait', )
 
 class UserShowShowSerializer(serializers.ModelSerializer):
     class Meta:
@@ -82,14 +85,14 @@ class UserShowShowSerializer(serializers.ModelSerializer):
 
 #common serializer
 class UserRelationInfoShowSerializer(serializers.ModelSerializer):
-    information = UserSimpleShowSerializer()
+    information = UserSimpleShowSerializer(required=False)
     class Meta:
         model = User
         fields = ('id', 'information')
 
 #use to create
 class UserInformationSerializer(serializers.ModelSerializer):
-    #user = UserSerializer(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     nickName = serializers.CharField(required=False)
     portrait = serializers.ImageField(required=False)
     personalDescription = serializers.CharField(required=False, allow_null=True, allow_blank=True)
@@ -117,7 +120,7 @@ class UserInformationSerializer(serializers.ModelSerializer):
     #Todo: something should be read-only
     class Meta:
         model = UserInformation
-        fields = (#'user',
+        fields = ('user',
                   'nickName',
                   'portrait',
                   'personalDescription',

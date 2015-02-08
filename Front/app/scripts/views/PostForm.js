@@ -69,10 +69,17 @@ SocialMap2.Views = SocialMap2.Views || {};
         },
 
         initialize: function () {
+            _.bindAll(this, 'cleanup');
+            this.cleanup();
         },
 
         render: function () {
             this.$el.html(this.template());
+        },
+
+        cleanup: function() {
+            this.undelegateEvents();
+            $(this.el).empty();
         }
 
     });

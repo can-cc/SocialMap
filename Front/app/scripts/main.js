@@ -12,13 +12,10 @@ window.SocialMap2 = {
         console.log('Hello from Backbone!');
         SocialMap2.baseDomain = '/api'
 
-
-        var mapView = new SocialMap2.Views.MapView();
-        mapView.render();
         var navigation = new SocialMap2.Views.Navigation();
         navigation.render();
+
         SocialMap2.Views.Navigation.checkLogin();
-        SocialMap2.profile = new SocialMap2.Views.Profile();
 
         var router = new SocialMap2.Routers.MainRouter();
         Backbone.history.start();
@@ -63,22 +60,22 @@ $(document).ready(function () {
 
 
 
-    function sayHello(){
-        $.ajax({
-            url: (SocialMap2.baseDomain + '/hello'),
-            type: "GET",
-            success: function(data){
-            },
-            error: function(){
-                alert('Can not connect to the server,  Please check your network connection!\n' +
-                'But you can use the map function!');
-            },
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true
-        });
-    }
+    //function sayHello(){
+    //    $.ajax({
+    //        url: (SocialMap2.baseDomain + '/hello'),
+    //        type: "GET",
+    //        success: function(data){
+    //        },
+    //        error: function(){
+    //            alert('Can not connect to the server,  Please check your network connection!\n' +
+    //            'But you can use the map function!');
+    //        },
+    //        xhrFields: {
+    //            withCredentials: true
+    //        },
+    //        crossDomain: true
+    //    });
+    //}
 
     //var files;
     //

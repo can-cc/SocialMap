@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from django.conf import settings
-import django.contrib.gis.db.models.fields
+import userManager.models
 
 
 class Migration(migrations.Migration):
@@ -13,24 +13,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='FriendsCategories',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='FriendsInUserCategories',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
         migrations.CreateModel(
             name='Interesting',
             fields=[
@@ -43,36 +25,12 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='UserFootprints',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('footPoint', django.contrib.gis.db.models.fields.PointField(srid=4326)),
-                ('time', models.DateTimeField(auto_now_add=True)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='UserFriends',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('IsHidden', models.BooleanField(default=False)),
-                ('Friendliness', models.IntegerField(default=1)),
-                ('DateCreated', models.DateField(auto_now_add=True)),
-                ('friend', models.ForeignKey(related_name='friends', to=settings.AUTH_USER_MODEL)),
-                ('user', models.ForeignKey(related_name='user', to=settings.AUTH_USER_MODEL)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
             name='UserInformation',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nickName', models.CharField(unique=True, max_length=20)),
-                ('portrait', models.ImageField(null=True, upload_to=b'', blank=True)),
+                ('sex', models.IntegerField(default=3)),
+                ('portrait', models.ImageField(default=b'user/portrait/default.jpeg', null=True, upload_to=userManager.models.content_file_name2, blank=True)),
                 ('personalDescription', models.TextField(null=True, blank=True)),
                 ('phoneNumber', models.BigIntegerField(null=True, blank=True)),
                 ('country', models.IntegerField(null=True, blank=True)),

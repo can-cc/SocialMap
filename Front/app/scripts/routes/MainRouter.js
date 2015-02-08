@@ -17,7 +17,17 @@ SocialMap2.Routers = SocialMap2.Routers || {};
             'message': 'Message',
             'profile': 'Profile',
             'signup': 'SignUp',
-            'signin': 'SignIn'
+            'signin': 'SignIn',
+            'infoInit': 'infoInit'
+        },
+
+        infoInit: function () {
+            if(!SocialMap2.profile){
+                SocialMap2.profile = new SocialMap2.Views.Profile();
+            }
+            $("#Map").hide();
+            $("#Panel").show();
+            SocialMap2.profile.render('infoInit');
         },
 
         mymp: function() {
@@ -32,6 +42,10 @@ SocialMap2.Routers = SocialMap2.Routers || {};
         },
 
         Map: function() {
+            if(!SocialMap2.mapView) {
+                SocialMap2.mapView = new SocialMap2.Views.MapView();
+            }
+            SocialMap2.mapView.render();
             function AdjustSize(){
                 var bodyHeight = $( window ).height();
                 var bodyWidth = $( window ).width();
@@ -52,21 +66,50 @@ SocialMap2.Routers = SocialMap2.Routers || {};
         },
 
         Profile: function() {
+            if(!SocialMap2.profile){
+                SocialMap2.profile = new SocialMap2.Views.Profile();
+            }
+            $.ajax({
+                url: (SocialMap2.baseDomain + '/hasinfo/'),
+                type: "GET",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRFToken', $.cookie('csrftoken'));
+                },
+                success: function(data){
+                    if(data.hasInfo==1){
+                        SocialMap2.profile.render('showProfile');
+                    }else{
+                        window.location.href = '#infoInit';
+                    }
+                },
+                error: function(){
+                },
+                xhrFields: {
+                    withCredentials: true
+                }
+            });
+
+
             $("#Map").hide();
             $("#Panel").show();
-            SocialMap2.profile.render('showProfile');
         },
 
         SignUp: function() {
+            if(!SocialMap2.Sign){
+                SocialMap2.Sign = new SocialMap2.Views.Sign();
+            }
             $("#Map").hide();
             $("#Panel").show();
-            SocialMap2.profile.render('signup');
+            SocialMap2.Sign.render('signup');
         },
 
         SignIn: function() {
+            if(!SocialMap2.Sign){
+                SocialMap2.Sign = new SocialMap2.Views.Sign();
+            }
             $("#Map").hide();
             $("#Panel").show();
-            SocialMap2.profile.render('signin');
+            SocialMap2.Sign.render('signin');
         }
     });
 

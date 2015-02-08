@@ -8,9 +8,8 @@ SocialMap2.Views = SocialMap2.Views || {};
     SocialMap2.Views.Profile = Backbone.View.extend({
         el: '#Panel',
 
-        signUpTemp: JST['app/scripts/templates/signUp.ejs'],
-        signInTemp: JST['app/scripts/templates/signIn.ejs'],
         profileTemp: JST['app/scripts/templates/Profile.ejs'],
+        infoInitTemp: JST['app/scripts/templates/InfoInitInput.ejs'],
 
         tagName: 'div',
 
@@ -19,8 +18,7 @@ SocialMap2.Views = SocialMap2.Views || {};
         className: '',
 
         events: {
-            'click #signin': 'SignIn',
-            'click #signup': 'SignUp'
+            'click #IIIsubmit': 'submitInfo'
         },
 
         initialize: function () {
@@ -28,79 +26,59 @@ SocialMap2.Views = SocialMap2.Views || {};
         },
 
         render: function (what) {
-            if(what == 'signup'){
-                this.ShowSignUp();
-            }else if(what == 'signin'){
-                this.ShowSignIn();
-            }else if(what == 'showProfile'){
+            if(what == 'showProfile'){
                 this.showProfile();
+            }else if(what == 'infoInit'){
+                this.showInfoInit();
             }
         },
 
 
         showProfile: function() {
-            this.$el.html(this.profileTemp());
-            var userInformation = new SocialMap2.Models.UserInfomation();
-            userInformation.fetch({url:SocialMap2.baseDomain + '/user/info/', success: (function(model, response, options){
-                $('#nickName').val(model.get('nickName'));
-                $('#description').val(model.get('personalDescription'));
-                $('#phoneNumber').val(model.get('phoneNumber'));
-                $('#city').val(model.get('city'));
-                $('#birthday').val(model.get('birthday'));
-                $('#school').val(model.get('school'));
-                $('#interest').val(model.get('interest'));
-                $('#cardId').val(model.get('cardId'));
-                $('#nowCity').val(model.get('nowCity'));
-                $('#publicMail').val(model.get('publicMail'));
-            })});
+            SocialMap2.userInformation = new SocialMap2.Models.UserInfomation();
+            SocialMap2.userInformation.fetch().success(function(model, response, options){
+                SocialMap2.profile.$el.html(SocialMap2.profile.profileTemp(model));
+            });
         },
 
-        ShowSignIn: function () {
-            this.$el.html(this.signInTemp());
-            $('#alert').hide();
+
+
+        showInfoInit: function() {
+            this.$el.html(this.infoInitTemp());
         },
 
-        ShowSignUp: function () {
-            this.$el.html(this.signUpTemp());
-        },
-
-        SignIn: function () {
+        submitInfo: function() {
             $.ajax({
-                url: (SocialMap2.baseDomain + '/api-auth/login/'),
+                url: (SocialMap2.baseDomain + '/user/info/'),
                 type: "POST",
                 data: {
                     csrfmiddlewaretoken: $.cookie('csrftoken'),
-                    username: $('#siUsername').val(),
-                    password: $('#siPasswd').val(),
-                    next: '/#profile',
-                    submit: 'Log+in'
+                    nickName: $('#IIInickName').val(),
+                    personalDescription: $('#IIIdescription').val(),
+                    phoneNumber: $('#IIIphoneNumber').val(),
+                    city: $('#IIIcity').val(),
+                    birthday: $('#IIIbirthday').val(),
+                    school: $('#IIIschool').val(),
+                    interest: $('#IIIinterest').val(),
+                    cardId: $('#IIIcardId').val(),
+                    nowCity: $('#IIInowCity').val(),
+                    publicMail: $('#IIIpublicMail').val()
                 },
                 beforeSend: function(xhr) {
-                    xhr.getResponseHeader('Set-Cookie');
                     xhr.setRequestHeader('X-CSRFToken', $.cookie('csrftoken'));
                 },
                 success: function(data){
-                    SocialMap2.Views.Navigation.checkLogin(function(hasError){
-                        if(hasError){
-                            $('#alert').show();
-                        }else{
-                            window.location.href = "#profile"
-                        }
-
-                    });
-
+                    window.location.href = '/#profile';
                 },
                 error: function(){
+                    //Todo change this
+                    alert('submit Info Error!')
                 },
                 xhrFields: {
                     withCredentials: true
                 }
                 //crossDomain: true
             });
-        },
-
-        SignUP: function () {
-
         }
 
     });

@@ -12,11 +12,17 @@ SocialMap2.Views = SocialMap2.Views || {};
 
         initialize: function () {
             SocialMap2.baiduMap = new BMap.Map('Map');
-            this.moveCenter = function(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                var accuracy = position.coords.accuracy;
-                var timestamp = position.coords.timestamp;
+            //this.moveCenter = function(position) {
+            this.moveCenter = function() {
+                //var latitude = position.coords.latitude;
+                //var longitude = position.coords.longitude;
+                //var accuracy = position.coords.accuracy;
+                //var timestamp = position.coords.timestamp;
+                var latitude = 22.567985669541868;
+                var longitude = 113.49517412882037;
+                var accuracy = 800;
+                var timestamp = '2015-01-02';
+                //113.50717412882037 22.554985669541868
 
                 SocialMap2.position = new SocialMap2.Models.PositionModel({
                     latitude:  latitude,
@@ -60,7 +66,8 @@ SocialMap2.Views = SocialMap2.Views || {};
                 alert('can\'t get position, please check setting!')
             };
             this.getPosition = function() {
-                navigator.geolocation.getCurrentPosition(this.moveCenter, this.getPositionError, {enableHighAccuracy: true});
+                //navigator.geolocation.getCurrentPosition(this.moveCenter, this.getPositionError, {enableHighAccuracy: true});
+                this.moveCenter();
             };
             //SocialMap2.baiduMap.addEventListener('dragend', function () {
             //    //alert(SocialMap2.baiduMap.getCenter().lng + '\n' + SocialMap2.baiduMap.getCenter().lat);
@@ -210,9 +217,11 @@ SocialMap2.Views = SocialMap2.Views || {};
                                 marker.addEventListener('click', function(){
                                     var markpost = new SocialMap2.Models.MarkPost(this.id);
                                     markpost.fetch().success(function (markpost, response, options) {
-                                        console.log(markpost.title);
-                                        var mpshow = new SocialMap2.Views.MPShow({model: markpost});
-                                        mpshow.render();
+                                        if(SocialMap2.mpshow){
+                                            SocialMap2.mpshow.cleanup();
+                                        }
+                                        SocialMap2.mpshow = new SocialMap2.Views.MPShow({model: markpost});
+                                        SocialMap2.mpshow.render();
                                     });
                                     $('#ModalPanel').modal();
 

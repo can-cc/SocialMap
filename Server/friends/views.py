@@ -11,7 +11,9 @@ from rest_framework import permissions
 from .models import *
 from .serializers import UserFriendSerialize, UserFollowsSerialize, UserFollowersSerialize
 from .FriendUtil import *
+from .permissions import AllowRemoveFollow, AllowRemoveFollower
 from userManager.permissions import IsOwner
+from rest_framework.decorators import api_view, permission_classes
 
 class FriendOperating(APIView):
     permission_classes = (permissions.IsAuthenticated, )
@@ -102,6 +104,7 @@ class FriendRequestion(APIView):
 
 
 class UserFollowsList(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
     def get(self, request, format=None):
         permission_classes = (permissions.IsAuthenticated, )
         user = request.user
@@ -129,9 +132,9 @@ class UserFollowsList(APIView):
 
 
 class UserFollowsDetail(APIView):
-    permission_classes = (permissions.IsAuthenticated, IsOwner )
+    permission_classes = (permissions.IsAuthenticated, AllowRemoveFollow, )
     def get(self, request, pk, format=None):
-        userFollow = UserFollows(id=pk)
+        userFollow = UserFollows.objects.get(id=pk)
         serializer = UserFollowsSerialize(userFollow)
         return Response(serializer.data)
 
@@ -141,29 +144,49 @@ class UserFollowsDetail(APIView):
     # 202 (Accepted) if the action has not yet been enacted,
     # or 204 (No Content) if the action has been enacted but the response does not include an entity.
     def delete(self, request, pk, format=None):
-        followId = pk
         user = request.user
         try:
             userFollow = UserFollows.objects.get(id=pk)
         except:
-            return Response({'follow': followId}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'UserFollows': pk}, status=status.HTTP_404_NOT_FOUND)
         try:
             userFollow.delete()
-            return Response({'user': user.id,
-                             'follow': followId}, status=status.HTTP_200_OK)
+            return Response({'UserFollows': pk}, status=status.HTTP_200_OK)
         except:
-            return Response({'user': user.id,
-                             'follow': followId}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'UserFollows': pk}, status=status.HTTP_400_BAD_REQUEST)
 
-class UserFollowersList(generics.ListAPIView):
+class UserFollowersList(APIView):
     permission_classes = (permissions.IsAuthenticated, )
-    queryset = UserFollowers.objects.all()
-    serializer_class = UserFollowersSerialize
+    def get(self, request, format=None):
+        permission_classes = (permissions.IsAuthenticated, )
+        user = request.user
+        userfollows = UserFollows.objects.filter(follow=user)
+        serializer = UserFollowersSerialize(userfollows, many=True)
+        return Response(serializer.data)
 
-class UserFollowersDetail(generics.RetrieveDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticated, IsOwner )
-    queryset = UserFollowers.objects.all()
-    serializer_class = UserFollowersSerialize
+class UserFollowersDetail(APIView):
+    permission_classes = (permissions.IsAuthenticated, AllowRemoveFollower, )
+    def get(self, request, pk, format=None):
+        userFollow = UserFollows.objects.get(id=pk)
+        serializer = UserFollowersSerialize(userFollow)
+        return Response(serializer.data)
+
+    #9.7 DELETE
+    #A successful response SHOULD be 200 (OK)
+    # if the response includes an entity describing the status,
+    # 202 (Accepted) if the action has not yet been enacted,
+    # or 204 (No Content) if the action has been enacted but the response does not include an entity.
+    def delete(self, request, pk, format=None):
+        user = request.user
+        try:
+            userFollow = UserFollows.objects.get(id=pk)
+        except:
+            return Response({'UserFollows': pk}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            userFollow.delete()
+            return Response({'UserFollows': pk}, status=status.HTTP_200_OK)
+        except:
+            return Response({'UserFollows': pk}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

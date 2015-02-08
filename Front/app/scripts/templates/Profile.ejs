@@ -1,56 +1,74 @@
+<div>
+    <table>
+        <tr>
+            <td>
+                <img src="<%= portrait %>" alt="cannot load portrait" class="img-circle" style="height: 100px; width: 100px;">
+            </td>
+            <td>
+                <span>   </span>
+                <div class="form-group">
+                    <label for="exampleInputFile">Upload portrait:</label>
+                    <input type="file" id="exampleInputFile">
+                    <p class="help-block">you can upload new portrait here!</p>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">NickName:</span>
-    <input type="text" id="nickName" class="form-control">
+    <input type="text" id="nickName" class="form-control" value="<%= nickName %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">Personal Description</span>
-    <textarea id="description" class="form-control"></textarea>
+    <textarea id="description" class="form-control" ><%= personalDescription %></textarea>
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">phoneNumber</span>
-    <input type="text" id="phoneNumber" class="form-control" >
+    <input type="text" id="phoneNumber" class="form-control" value="<%= phoneNumber %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">City</span>
-    <input type="text" id="city" class="form-control" >
+    <input type="text" id="city" class="form-control" value="<%= city %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">Birthday</span>
-    <input type="text" id="birthday" class="form-control" >
+    <input type="text" id="birthday" class="form-control" value="<%= birthday %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">School</span>
-    <input type="text" id="school" class="form-control" >
+    <input type="text" id="school" class="form-control" value="<%= school %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">Interest</span>
-    <input type="text" id="interest" class="form-control" >
+    <input type="text" id="interest" class="form-control" value="<%= interest %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">CardId</span>
-    <input type="text" id="cardId" class="form-control" >
+    <input type="text" id="cardId" class="form-control" value="<%= cardId %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">NowCity</span>
-    <input type="text" id="nowCity" class="form-control" >
+    <input type="text" id="nowCity" class="form-control" value="<%= nowCity %>">
 </div>
 <br>
 <div class="input-group">
     <span class="input-group-addon">PublicMail</span>
-    <input type="text" id="publicMail" class="form-control" >
+    <input type="text" id="publicMail" class="form-control" value="<%= publicMail %>">
 </div>
 <br>
 <span style="text-align:center;">
-    <button type="button" id="signup" class="btn btn-info" onclick="location.href='#signup'">Alter</button>
+    <button type="button" class="btn btn-info" >Alter</button>
     <button type="button" class="btn btn-danger" onclick="location.href='/api/api-auth/logout?next=/#'">Sign Out</button>
 </span>
 <br>

@@ -8,14 +8,14 @@ import userManager.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('userManager', '0004_auto_20150205_1904'),
+        ('userManager', '0002_remove_userinformation_portrait'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='userinformation',
             name='portrait',
-            field=models.ImageField(default=b'user/portrait/default.jpeg', null=True, upload_to=userManager.models.content_file_name, blank=True),
+            field=models.ImageField(default=b'user/portrait/default.jpeg', null=True, upload_to=userManager.models.content_file_name2, blank=True),
             preserve_default=True,
         ),
     ]

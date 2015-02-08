@@ -46,9 +46,9 @@ INSTALLED_APPS = (
     'userManager',
     'userTrack',
     'markPost',
-    'BasicServices',
     'corsheaders',
     'friends',
+    'BasicServices',
     #'middleware',
 )
 

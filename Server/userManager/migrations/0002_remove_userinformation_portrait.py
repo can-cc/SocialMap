@@ -7,12 +7,12 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('friends', '0003_userfollowers_userfollows'),
+        ('userManager', '0001_initial'),
     ]
 
     operations = [
-        migrations.AlterUniqueTogether(
-            name='userfollows',
-            unique_together=set([('user', 'follow')]),
+        migrations.RemoveField(
+            model_name='userinformation',
+            name='portrait',
         ),
     ]

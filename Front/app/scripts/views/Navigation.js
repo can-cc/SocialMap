@@ -43,6 +43,7 @@ SocialMap2.Views = SocialMap2.Views || {};
         }
     };
 
+    //callback is use for sign in vi
     SocialMap2.Views.Navigation.checkLogin = function(callback){
         $.ajax({
             url: (SocialMap2.baseDomain + '/hello'),
@@ -53,16 +54,15 @@ SocialMap2.Views = SocialMap2.Views || {};
             },
             success: function(data){
                 if (data == 0) {
+
                     if(callback)
                         callback(true);
-                    //$('#alert').show();
                 }else{
                     SocialMap2.loginError = false;
                     data = eval( '(' + data + ')' );
                     SocialMap2.Views.Navigation.profileChange(1, data.username);
                     if(callback)
                         callback(false);
-                    //window.location.href = "#profile";
                 }
             },
             error: function(data){

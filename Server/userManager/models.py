@@ -1,6 +1,7 @@
 __author__ = 'tyan'
 from django.db import models
 from django.contrib.auth.models import User
+from .generateMessageBubble import generateMB
 
 
 # Create your models here.
@@ -27,20 +28,18 @@ class Interesting(models.Model):
     interesting = models.CharField(max_length=50, blank=True, null=True)
 
 
+def content_file_name2(instance, filename):
+        i = filename.rindex('.')
+        suffix = filename[i:]
+        return '/'.join(['user/portrait', instance.user.username + '_portrait' + suffix])
 
-def content_file_name(instance, filename):
-    i = filename.rindex('.')
-    suffix = filename[i:]
-    return '/'.join(['user/portrait', instance.user.username + '_portrait' + suffix])
-#Todo: create index
-#Todo: man and women portrait
 class UserInformation(models.Model):
     user = models.OneToOneField(User, related_name="information", unique=True)
     nickName = models.CharField(max_length=20, unique=True)
     #1:man 2:women 3:unknown
     sex = models.IntegerField(default=3)
     portrait = models.ImageField(blank=True, null=True, max_length=100,
-                                 upload_to=content_file_name,
+                                 upload_to=content_file_name2,
                                  default='user/portrait/default.jpeg')
     personalDescription = models.TextField(blank=True, null=True)
     phoneNumber = models.BigIntegerField(blank=True, null=True)
@@ -63,6 +62,12 @@ class UserInformation(models.Model):
     activityScore = models.IntegerField(default=0)
     friendCount = models.IntegerField(default=0)
     interest = models.ManyToManyField(Interesting, through='UserInteresting', through_fields=('userInfo', 'interesting'), blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        super(UserInformation, self).save(*args, **kwargs) # Call the "real" save() method.
+        generateMB(self.portrait)
+
+
 
 
 class UserInteresting(models.Model):
